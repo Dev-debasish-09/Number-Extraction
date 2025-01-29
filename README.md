@@ -17,3 +17,31 @@ OCR-System/
 ├── README.md              # Project documentation
 ├── .gitignore             # Ignore unnecessary files
 ```
+Installation
+
+Requirements
+Below are the required dependencies for this project:
+```
+opencv-python
+pytesseract
+easyocr
+numpy
+```
+
+Usage
+
+1. Prepare Images
+Place images containing numeric data in the input_images/ folder.
+
+2. Run the OCR Processing
+Execute the script:
+```
+python main.py
+```
+3. Output
+Extracted numbers are saved in output.csv in the format:
+```
+Image Name, Extracted Numbers
+image1.png, , 678.90
+image2.jpg, 456.78
+```
