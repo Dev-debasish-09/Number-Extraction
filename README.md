@@ -42,6 +42,7 @@ python main.py
 Extracted numbers are saved in output.csv in the format:
 ```
 Image Name, Extracted Numbers
-image1.png, , 678.90
-image2.jpg, 456.78
+image1.png, 277, 74
+image2.jpg, 210
+
 ```
