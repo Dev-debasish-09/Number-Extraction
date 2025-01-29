@@ -1,0 +1,77 @@
+OCR Model Documentation
+This script processes images to extract numeric data using Optical Character Recognition (OCR). It uses OpenCV for image preprocessing and contour detection, Tesseract OCR for text extraction, and easyOCR as an alternative OCR method. The extracted numeric data is saved to a CSV file.
+
+Libraries Used:
+cv2: For image processing tasks like reading, blurring, thresholding, and morphological operations.
+os: For interacting with the file system, such as reading from directories and saving results.
+re: For regular expression matching, used to filter numeric values from the OCR results.
+csv: For saving the extracted data into CSV format.
+pytesseract: For text extraction from images using Tesseract OCR.
+easyocr.Reader: A potential alternative for OCR, though it is not used in the provided functions.
+Functions:
+preprocess_image(image_path)
+Preprocesses the input image by applying a series of transformations to enhance OCR accuracy.
+
+Parameters: image_path (str) – The path to the image file.
+Returns: Processed grayscale image (numpy array).
+Steps:
+
+Reads the image in grayscale.
+Applies Gaussian blur to reduce noise.
+Applies adaptive thresholding to binarize the image.
+Applies morphological closing operation to clean up small noise.
+extract_text_regions(image)
+Detects potential regions in the image that might contain text using contours.
+
+Parameters: image (numpy array) – The preprocessed binary image.
+Returns: List of tuples, each containing (x, y, w, h) coordinates of the bounding boxes of detected regions.
+Steps:
+
+Finds external contours in the image.
+For each contour, calculates the bounding rectangle.
+Filters regions based on size (width and height).
+ocr_with_tesseract(region)
+Performs OCR on a specified image region using Tesseract to extract text.
+
+Parameters: region (numpy array) – A cropped image region containing potential numeric text.
+Returns: The OCR result as a string (numeric text).
+Uses Tesseract with custom configurations for numeric text extraction:
+
+--psm 8: Treats the image as a single word line.
+-c tessedit_char_whitelist=0123456789.: Restricts Tesseract to recognizing digits and decimal points.
+process_image(image_path)
+Main function to process an image and extract numeric data.
+
+Parameters: image_path (str) – The path to the image file.
+Returns: List of extracted numeric text (list of strings).
+Steps:
+
+Preprocesses the image.
+Detects potential text regions.
+Applies OCR to each region.
+Filters out non-numeric values using a regular expression.
+process_images(input_folder, output_csv)
+Processes all images in a specified folder and saves the extracted data to a CSV file.
+
+Parameters:
+input_folder (str): The folder containing the input images.
+output_csv (str): The path to the output CSV file where the results will be saved.
+Returns: None
+Steps:
+
+Loops through all images in the input_folder with valid extensions (.jpg, .jpeg, .png).
+Calls process_image for each image to extract numeric data.
+Saves the results to a CSV file using save_to_csv.
+save_to_csv(results, output_csv)
+Saves the results of the image processing to a CSV file.
+
+Parameters:
+
+results (list of tuples): A list of tuples, where each tuple contains the image name and extracted numeric data.
+output_csv (str): The path to the output CSV file.
+Returns: None
+
+Steps:
+
+Creates a CSV file and writes a header ("Image Name", "Extracted Numbers").
+Writes the results for each image, joining the list of numbers into a comma-separated string.
